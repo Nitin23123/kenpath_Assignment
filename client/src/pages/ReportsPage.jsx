@@ -51,20 +51,16 @@ export default function ReportsPage() {
         {/* Header & Date Picker */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
           <div>
-            <div className="flex items-center gap-2 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-1">
-              <BarChart2 className="w-4 h-4" />
-              <span>Clinical Summaries</span>
-            </div>
-            <h1 className="text-2xl font-black text-slate-900">
-              Glucose Reports & Analysis
+            <h1 className="text-xl font-bold text-slate-900">
+              Glucose Reports
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
-              Review Daily, Month-to-date, and Previous Month statistical metrics
+              Daily, Month-to-date, and Previous Month summaries
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <label className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <label className="text-xs font-semibold text-slate-600">
               Selected Date:
             </label>
             <div className="relative">
@@ -73,7 +69,7 @@ export default function ReportsPage() {
                 max={todayStr}
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
           </div>

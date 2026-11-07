@@ -101,27 +101,23 @@ export default function Dashboard() {
         )}
 
         {/* Welcome & Action Banner */}
-        <div className="bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 rounded-3xl p-6 sm:p-8 text-white shadow-lg shadow-emerald-700/10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-emerald-100">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Personal Diabetes Management</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Hello, {user?.name || 'Patient'}!
+        <div className="bg-emerald-700 rounded-2xl p-6 sm:p-7 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-1">
+            <h1 className="text-2xl font-bold tracking-tight">
+              Hello, {user?.name || 'User'}
             </h1>
             <p className="text-emerald-100 text-sm max-w-xl">
-              Track up to 4 readings a day across breakfast, lunch, and dinner to stay in healthy range.
+              Log up to 4 readings a day across fasting and meal slots.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             {/* Today status badge */}
-            <div className="px-4 py-3 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 text-center">
-              <div className="text-xs uppercase font-bold tracking-wider text-emerald-200">
-                Today's Log
+            <div className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/10 text-center">
+              <div className="text-[11px] uppercase font-bold tracking-wider text-emerald-200">
+                Today's Readings
               </div>
-              <div className="text-xl font-black mt-0.5">
+              <div className="text-lg font-bold mt-0.5">
                 {todayCount} <span className="text-xs font-normal text-emerald-200">/ 4 slots</span>
               </div>
             </div>
@@ -129,9 +125,9 @@ export default function Dashboard() {
             {/* Log Reading Button */}
             <button
               onClick={handleOpenAdd}
-              className="px-5 py-3.5 rounded-2xl bg-white text-emerald-800 hover:bg-emerald-50 text-sm font-bold shadow-lg shadow-slate-950/10 hover:shadow-xl transition-all flex items-center justify-center gap-2"
+              className="px-4 py-2.5 rounded-xl bg-white text-emerald-800 hover:bg-emerald-50 text-sm font-semibold transition-colors flex items-center justify-center gap-2"
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-4 h-4" />
               <span>Log Reading</span>
             </button>
           </div>

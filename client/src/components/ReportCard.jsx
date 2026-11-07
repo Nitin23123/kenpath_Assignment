@@ -74,11 +74,11 @@ export default function ReportCard({ title, dateRange, stats, icon: Icon, badgeC
         )}
       </div>
 
-      {/* Target Guide summary footer */}
-      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-        <span>Target range: 70–140 mg/dl</span>
-        <span className="font-semibold text-slate-500">
-          {hasData ? (stats.average <= 140 ? '✓ On Track' : '⚠️ Elevated') : '—'}
+      {/* Footer */}
+      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+        <span>Target: 70–140 mg/dl</span>
+        <span className="font-medium">
+          {hasData ? (stats.average <= 140 ? 'In target range' : 'Above target') : '—'}
         </span>
       </div>
     </div>

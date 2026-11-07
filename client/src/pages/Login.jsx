@@ -59,17 +59,14 @@ export default function Login() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
         <div className="bg-white py-8 px-6 shadow-xl shadow-slate-200/50 rounded-2xl sm:px-10 border border-slate-100">
           {/* Demo helper callout */}
-          <div className="mb-6 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2 text-emerald-800">
-              <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Want to evaluate quickly?</span>
-            </div>
+          <div className="mb-6 p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+            <span className="text-slate-600 font-medium">Demo account available</span>
             <button
               type="button"
               onClick={fillDemo}
-              className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors"
             >
-              Fill Demo User
+              Use Demo Credentials
             </button>
           </div>
 
