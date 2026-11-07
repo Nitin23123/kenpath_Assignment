@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Local Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.log
+
+# Local PostgreSQL cluster data
+.pgdata/
+pgdata/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
