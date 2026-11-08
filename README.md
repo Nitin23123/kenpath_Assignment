@@ -164,7 +164,7 @@ docker-compose up --build
 3. **Target glucose range**: Readings between 70 and 140 mg/dl are highlighted as standard target range; `< 70` is flagged as low, `141–199` as elevated, and `≥ 200` as high.
 
 ### What I'd improve with more time
-- **Doctor role**: Add a role field to users so doctors can view assigned patient reports.
+- **Critical alerts**: Real-time email or SMS alert when a patient logs recurrent hypoglycemia (< 70 mg/dl).
 - **Export options**: Add PDF and CSV export for patients to bring to appointments.
 - **Background reminders (BullMQ + Redis)**: Send an evening reminder email/notification to patients with fewer than 4 readings logged for the day.
 - **Offline support**: Service Worker caching so patients can log readings without network access and sync when back online.
