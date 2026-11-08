@@ -1,5 +1,6 @@
 const { query } = require('../config/db');
 const { validateReadingInput, getSlotArticle } = require('../utils/validation');
+const { invalidateUserReportsCache } = require('../config/redis');
 
 /**
  * Format reading date to YYYY-MM-DD string to avoid timezone shifts
@@ -62,6 +63,9 @@ async function createReading(req, res, next) {
        RETURNING id, user_id, TO_CHAR(reading_date, 'YYYY-MM-DD') AS reading_date, slot, value, created_at, updated_at`,
       [userId, reading_date, slot, parseInt(value, 10)]
     );
+
+    // Invalidate Redis cache when readings change
+    await invalidateUserReportsCache(userId);
 
     return res.status(201).json({
       success: true,
@@ -231,6 +235,9 @@ async function updateReading(req, res, next) {
       [reading_date, slot, parseInt(value, 10), id, userId]
     );
 
+    // Invalidate Redis cache when readings change
+    await invalidateUserReportsCache(userId);
+
     return res.json({
       success: true,
       message: 'Reading updated successfully.',
@@ -266,6 +273,9 @@ async function deleteReading(req, res, next) {
     if (result.rows.length === 0) {
       return res.status(404).json({ success: false, error: 'Reading not found.' });
     }
+
+    // Invalidate Redis cache when readings change
+    await invalidateUserReportsCache(userId);
 
     return res.json({
       success: true,

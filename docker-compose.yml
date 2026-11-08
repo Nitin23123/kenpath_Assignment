@@ -19,6 +19,20 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis:7-alpine
+    container_name: sweety-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata_sweety:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   server:
     build:
       context: ./server
@@ -33,12 +47,16 @@ services:
       DB_NAME: sweety_db
       DB_USER: postgres
       DB_PASSWORD: postgrespassword
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
       JWT_SECRET: sweety_docker_secret_key_123456
       JWT_EXPIRES_IN: 7d
     ports:
       - "5000:5000"
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   client:
@@ -54,3 +72,4 @@ services:
 
 volumes:
   pgdata_sweety:
+  redisdata_sweety:

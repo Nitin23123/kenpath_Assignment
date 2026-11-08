@@ -44,10 +44,11 @@ For any chosen reference date (defaults to today):
 - **Empty State**: Friendly message when no readings exist for the selected date range.
 
 ### Bonus Tasks Implemented
+- **Redis report caching**: Automatically caches computed report results in Redis (1h TTL) and invalidates keys immediately whenever a reading is added, edited, or deleted. Includes graceful offline fallback if Redis is not running.
 - **Doctor role**: Clinician account (`doctor@sweety.com`) with dedicated oversight portal to view assigned patient logs, summaries, and trend charts.
 - **Pagination on `GET /api/readings`**: Supports `?page=1&limit=20` (custom page & limit) with full pagination metadata.
 - **Charts**: Month-to-date blood glucose trend curve using Recharts with target zone boundaries (70–140 mg/dl).
-- **Docker**: `docker-compose.yml` orchestrating PostgreSQL 16, Node/Express API, and React/Nginx client.
+- **Docker**: `docker-compose.yml` orchestrating PostgreSQL 16, Redis 7, Node/Express API, and React/Nginx client.
 - **Frontend tests**: React Testing Library + Vitest test suite for reading form validations.
 - **Seed script**: Automated generator populating realistic demo patient and doctor accounts with historical readings.
 

@@ -1,4 +1,5 @@
 const { query } = require('../config/db');
+const { getCachedReports, setCachedReports } = require('../config/redis');
 
 /**
  * Calculates start and end date ranges for:
@@ -112,6 +113,15 @@ async function getReports(req, res, next) {
       });
     }
 
+    // 1. Check Redis cache first (Bonus: Redis Caching)
+    const cachedData = await getCachedReports(userId, selectedDate);
+    if (cachedData) {
+      return res.json({
+        ...cachedData,
+        cached: true
+      });
+    }
+
     const ranges = calculateReportDateRanges(selectedDate);
 
     // 1. Daily Report & readings
@@ -149,7 +159,7 @@ async function getReports(req, res, next) {
       )
     ]);
 
-    return res.json({
+    const responseData = {
       success: true,
       selectedDate,
       reports: {
@@ -168,7 +178,12 @@ async function getReports(req, res, next) {
         }
       },
       trends: monthlyTrendsResult.rows
-    });
+    };
+
+    // Store in Redis cache for 1 hour
+    await setCachedReports(userId, selectedDate, responseData, 3600);
+
+    return res.json(responseData);
   } catch (err) {
     next(err);
   }
