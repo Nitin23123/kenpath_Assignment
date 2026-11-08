@@ -43,6 +43,49 @@ For any chosen reference date (defaults to today):
 - **Monthly (Previous Month)**: The entire previous calendar month (highest, lowest, average, count).
 - **Empty State**: Friendly message when no readings exist for the selected date range.
 
+---
+
+## Application Screenshots
+
+| 1. Modern Minimal Dashboard | 2. Reading Form Modal |
+| :---: | :---: |
+| ![Dashboard](docs/screenshots/02-dashboard.png) | ![Modal](docs/screenshots/03-add-reading-modal.png) |
+
+| 3. Validation Rules in Action | 4. Reports & Trends (Recharts) |
+| :---: | :---: |
+| ![Validation Error](docs/screenshots/04-validation-error.png) | ![Reports](docs/screenshots/05-reports.png) |
+
+| 5. Doctor Portal (Bonus Feature) | 6. Authentication Page |
+| :---: | :---: |
+| ![Doctor Portal](docs/screenshots/06-doctor-portal.png) | ![Login](docs/screenshots/01-login.png) |
+
+---
+
+## Screen Recording Walkthrough (2–3 Minutes)
+
+To record or demonstrate the application workflow, follow this 2-minute walkthrough path:
+
+1. **Sign In (0:00 – 0:20)**
+   - Open `http://localhost:5173`.
+   - Click the **"Patient"** demo button to autofill `demo@sweety.com` / `password123`.
+   - Click **Sign In**.
+2. **Dashboard & Daily Overview (0:20 – 0:50)**
+   - Review the 4-slot progress tracker (`Fasting`, `Breakfast`, `Lunch`, `Dinner`).
+   - Notice today's mean glucose value card and glycemic reference scale rail.
+   - Scan the paginated readings journal with color-coded classification pills.
+3. **Log a Reading & Test Validations (0:50 – 1:30)**
+   - Click **"Log Glucose Reading"** to open the modal.
+   - Enter `35` mg/dl and click Save ➡️ see validation error `"Value must be between 40 and 600 mg/dl."`
+   - Select tomorrow's date ➡️ see validation error `"Date cannot be in the future."`
+   - Enter `115` mg/dl for today's pending slot and save ➡️ see the slot indicator light up and the table update instantly.
+4. **Reports & Trends (1:30 – 2:05)**
+   - Click **Reports & Trends** in the top navigation.
+   - Review the 3 analytical cards: **Daily** (with slot breakdown list), **Month-to-Date**, and **Monthly (Previous Month)** with 1-decimal rounding.
+   - Review the interactive Recharts month-to-date curve with clinical target area (`70–140 mg/dl`).
+5. **Doctor Portal (2:05 – 2:30)**
+   - Log out and click **"Doctor Role"** (`doctor@sweety.com`).
+   - Access the Doctor Oversight Portal to view assigned patients, their reading counts, and their clinical reports.
+
 ### Bonus Tasks Implemented
 - **Redis report caching**: Automatically caches computed report results in Redis (1h TTL) and invalidates keys immediately whenever a reading is added, edited, or deleted. Includes graceful offline fallback if Redis is not running.
 - **Doctor role**: Clinician account (`doctor@sweety.com`) with dedicated oversight portal to view assigned patient logs, summaries, and trend charts.
