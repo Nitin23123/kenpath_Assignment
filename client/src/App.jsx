@@ -5,17 +5,15 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ReportsPage from './pages/ReportsPage';
+import DoctorPortal from './pages/DoctorPortal';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-xs font-semibold text-slate-500">Loading Sweety...</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
+        <div className="w-8 h-8 border-2 border-royal-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -27,6 +25,14 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function DoctorRoute({ children }) {
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role !== 'doctor') return <Navigate to="/" replace />;
+  return children;
+}
+
 function PublicRoute({ children }) {
   const { user, loading } = useAuth();
 
@@ -35,7 +41,7 @@ function PublicRoute({ children }) {
   }
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={user.role === 'doctor' ? '/doctor' : '/'} replace />;
   }
 
   return children;
@@ -76,6 +82,14 @@ export default function App() {
               <ProtectedRoute>
                 <ReportsPage />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/doctor"
+            element={
+              <DoctorRoute>
+                <DoctorPortal />
+              </DoctorRoute>
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />

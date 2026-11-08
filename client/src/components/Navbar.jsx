@@ -32,27 +32,42 @@ export default function Navbar() {
             </Link>
 
             <nav className="hidden md:flex items-center gap-1">
-              <Link
-                to="/"
-                className={`px-3.5 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/')
-                    ? 'bg-royal-950 text-royal-200 border border-royal-700/60'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                }`}
-              >
-                Readings
-              </Link>
-              <Link
-                to="/reports"
-                className={`px-3.5 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-1.5 ${
-                  isActive('/reports')
-                    ? 'bg-royal-950 text-royal-200 border border-royal-700/60'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                }`}
-              >
-                <BarChart2 className="w-4 h-4 text-royal-400" />
-                Reports & Trends
-              </Link>
+              {user.role === 'doctor' ? (
+                <Link
+                  to="/doctor"
+                  className={`px-3.5 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    isActive('/doctor')
+                      ? 'bg-royal-950 text-royal-200 border border-royal-700/60'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                  }`}
+                >
+                  Doctor Portal
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to="/"
+                    className={`px-3.5 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                      isActive('/')
+                        ? 'bg-royal-950 text-royal-200 border border-royal-700/60'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    Readings
+                  </Link>
+                  <Link
+                    to="/reports"
+                    className={`px-3.5 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-1.5 ${
+                      isActive('/reports')
+                        ? 'bg-royal-950 text-royal-200 border border-royal-700/60'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    <BarChart2 className="w-4 h-4 text-royal-400" />
+                    Reports & Trends
+                  </Link>
+                </>
+              )}
             </nav>
           </div>
 

@@ -44,11 +44,12 @@ For any chosen reference date (defaults to today):
 - **Empty State**: Friendly message when no readings exist for the selected date range.
 
 ### Bonus Tasks Implemented
-- Pagination on `GET /api/readings` (`?page=1&limit=20`)
-- Month-to-date glucose trend line chart using Recharts
-- `docker-compose.yml` for PostgreSQL and app services
-- React Testing Library unit tests for the reading form modal
-- Seed script with sample data spanning today, current month, and previous month
+- **Doctor role**: Clinician account (`doctor@sweety.com`) with dedicated oversight portal to view assigned patient logs, summaries, and trend charts.
+- **Pagination on `GET /api/readings`**: Supports `?page=1&limit=20` (custom page & limit) with full pagination metadata.
+- **Charts**: Month-to-date blood glucose trend curve using Recharts with target zone boundaries (70–140 mg/dl).
+- **Docker**: `docker-compose.yml` orchestrating PostgreSQL 16, Node/Express API, and React/Nginx client.
+- **Frontend tests**: React Testing Library + Vitest test suite for reading form validations.
+- **Seed script**: Automated generator populating realistic demo patient and doctor accounts with historical readings.
 
 ---
 
@@ -109,13 +110,16 @@ Open `http://localhost:5173` in your browser.
 
 ---
 
-## Demo Account
+## Demo Accounts
 
-The seed script creates a demo user:
-- **Email**: `demo@sweety.com`
-- **Password**: `password123`
+The seed script (`npm run seed`) provisions two test accounts:
 
-The login page also has a "Use Demo Credentials" button for quick access.
+| Role | Email | Password | Access Capabilities |
+| :--- | :--- | :--- | :--- |
+| **Patient** | `demo@sweety.com` | `password123` | Log up to 4 readings/day, view personal daily/monthly reports & trends |
+| **Doctor** | `doctor@sweety.com` | `password123` | View assigned patients, inspect patient reports & trend curves |
+
+*(Quick access buttons for both Patient and Doctor are available on the login page.)*
 
 ---
 

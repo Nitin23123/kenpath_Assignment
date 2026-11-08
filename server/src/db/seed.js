@@ -131,9 +131,37 @@ async function seed() {
 
     await client.query('COMMIT');
     console.log(`Successfully seeded ${readingsToInsert.length} readings for demo user.`);
-    console.log(`Demo Credentials:`);
+
+    // 4. Create Doctor Account (Bonus Task: Doctor Role)
+    const docEmail = 'doctor@sweety.com';
+    const docPassword = 'password123';
+    let docResult = await client.query('SELECT id FROM users WHERE email = $1', [docEmail]);
+    let docId;
+    if (docResult.rows.length === 0) {
+      const newDoc = await client.query(
+        'INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id',
+        ['Dr. Sarah Connor', docEmail, passwordHash, 'doctor']
+      );
+      docId = newDoc.rows[0].id;
+      console.log(`Created doctor user: ${docEmail} (ID: ${docId})`);
+    } else {
+      docId = docResult.rows[0].id;
+      await client.query('UPDATE users SET role = $1 WHERE id = $2', ['doctor', docId]);
+    }
+
+    // Assign Demo Patient to Doctor
+    await client.query(
+      'INSERT INTO doctor_patients (doctor_id, patient_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      [docId, userId]
+    );
+    console.log(`Assigned patient ID ${userId} to doctor ID ${docId}`);
+
+    console.log(`Demo Patient Credentials:`);
     console.log(`Email:    ${demoEmail}`);
     console.log(`Password: ${demoPassword}`);
+    console.log(`Doctor Credentials:`);
+    console.log(`Email:    ${docEmail}`);
+    console.log(`Password: ${docPassword}`);
   } catch (err) {
     await client.query('ROLLBACK');
     console.error('Seeding failed:', err);

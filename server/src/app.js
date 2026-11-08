@@ -3,6 +3,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const readingsRoutes = require('./routes/readingsRoutes');
 const reportsRoutes = require('./routes/reportsRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
 const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -25,6 +26,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/readings', readingsRoutes);
 app.use('/api/reports', reportsRoutes);
+app.use('/api/doctor', doctorRoutes);
 
 // 404 Handler for undefined routes
 app.use((req, res) => {

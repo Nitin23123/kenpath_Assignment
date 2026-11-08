@@ -11,7 +11,8 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
  */
 async function register(req, res, next) {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
+    const userRole = role === 'doctor' ? 'doctor' : 'patient';
 
     if (!name || !name.trim()) {
       return res.status(400).json({ success: false, error: 'Name is required.' });
@@ -40,8 +41,8 @@ async function register(req, res, next) {
     const passwordHash = await bcrypt.hash(password, salt);
 
     const result = await query(
-      'INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id, name, email, created_at',
-      [name.trim(), normalizedEmail, passwordHash]
+      'INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role, created_at',
+      [name.trim(), normalizedEmail, passwordHash, userRole]
     );
 
     const newUser = result.rows[0];
@@ -55,6 +56,7 @@ async function register(req, res, next) {
         id: newUser.id,
         name: newUser.name,
         email: newUser.email,
+        role: newUser.role,
         createdAt: newUser.created_at
       }
     });
@@ -81,7 +83,7 @@ async function login(req, res, next) {
     const normalizedEmail = email.trim().toLowerCase();
 
     const result = await query(
-      'SELECT id, name, email, password_hash, created_at FROM users WHERE email = $1',
+      'SELECT id, name, email, password_hash, role, created_at FROM users WHERE email = $1',
       [normalizedEmail]
     );
 
@@ -105,6 +107,7 @@ async function login(req, res, next) {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role || 'patient',
         createdAt: user.created_at
       }
     });

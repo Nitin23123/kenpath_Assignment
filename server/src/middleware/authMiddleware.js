@@ -23,9 +23,9 @@ async function authMiddleware(req, res, next) {
 
     const decoded = jwt.verify(token, JWT_SECRET);
     
-    // Check if user still exists
+    // Check if user still exists (including role)
     const result = await query(
-      'SELECT id, name, email, created_at FROM users WHERE id = $1',
+      'SELECT id, name, email, role, created_at FROM users WHERE id = $1',
       [decoded.userId]
     );
 
@@ -52,7 +52,18 @@ async function authMiddleware(req, res, next) {
   }
 }
 
+function doctorMiddleware(req, res, next) {
+  if (req.user?.role !== 'doctor') {
+    return res.status(403).json({
+      success: false,
+      error: 'Access denied. Doctor privileges required.'
+    });
+  }
+  next();
+}
+
 module.exports = {
   authMiddleware,
+  doctorMiddleware,
   JWT_SECRET
 };

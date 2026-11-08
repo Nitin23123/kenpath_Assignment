@@ -42,6 +42,12 @@ export default function Login() {
     setError('');
   };
 
+  const fillDoctor = () => {
+    setEmail('doctor@sweety.com');
+    setPassword('password123');
+    setError('');
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-950 text-slate-100 font-sans">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
@@ -59,15 +65,24 @@ export default function Login() {
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4">
         <div className="bg-slate-900 py-7 px-6 rounded-xl border border-slate-800 shadow-xl sm:px-9">
           {/* Demo helper */}
-          <div className="mb-5 p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
-            <span className="text-slate-400">Demo account:</span>
-            <button
-              type="button"
-              onClick={fillDemo}
-              className="px-2.5 py-1 rounded-md bg-royal-600 hover:bg-royal-500 text-white text-xs font-medium transition-colors"
-            >
-              Use Demo Credentials
-            </button>
+          <div className="mb-5 p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs gap-2">
+            <span className="text-slate-400">Demo Accounts:</span>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={fillDemo}
+                className="px-2 py-1 rounded bg-royal-600 hover:bg-royal-500 text-white text-[11px] font-medium transition-colors"
+              >
+                Patient
+              </button>
+              <button
+                type="button"
+                onClick={fillDoctor}
+                className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-royal-300 border border-slate-700 text-[11px] font-medium transition-colors"
+              >
+                Doctor Role
+              </button>
+            </div>
           </div>
 
           {error && (
