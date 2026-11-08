@@ -4,7 +4,7 @@ import api from '../services/api';
 import Navbar from '../components/Navbar';
 import ReadingsTable from '../components/ReadingsTable';
 import ReadingFormModal from '../components/ReadingFormModal';
-import { Plus, Calendar, Filter, Sparkles, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Plus, CheckCircle2 } from 'lucide-react';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -82,50 +82,48 @@ export default function Dashboard() {
   };
 
   const handleSaved = () => {
-    showToast(editingReading ? 'Reading updated successfully.' : 'New reading recorded.');
+    showToast(editingReading ? 'Reading updated.' : 'Reading recorded.');
     fetchReadings(pagination.page);
     fetchTodayStatus();
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-        {/* Toast notification */}
+        {/* Toast */}
         {toastMessage && (
-          <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs font-semibold animate-bounce">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <div className="fixed bottom-6 right-6 z-50 bg-royal-900 border border-royal-700 text-white px-4 py-3 rounded-lg shadow-xl flex items-center gap-2.5 text-xs font-semibold animate-fadeIn">
+            <CheckCircle2 className="w-4 h-4 text-royal-400" />
             <span>{toastMessage}</span>
           </div>
         )}
 
-        {/* Welcome & Action Banner */}
-        <div className="bg-emerald-700 rounded-2xl p-6 sm:p-7 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {/* Royal Hero Header */}
+        <div className="bg-gradient-to-r from-royal-950 via-royal-900 to-slate-900 rounded-xl p-6 sm:p-7 border border-royal-800/80 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1">
-            <h1 className="text-2xl font-bold tracking-tight">
-              Hello, {user?.name || 'User'}
+            <h1 className="text-2xl font-bold tracking-tight text-white">
+              Welcome back, {user?.name || 'User'}
             </h1>
-            <p className="text-emerald-100 text-sm max-w-xl">
-              Log up to 4 readings a day across fasting and meal slots.
+            <p className="text-royal-200/80 text-sm max-w-xl">
+              Track your daily blood glucose entries across 4 dedicated meal and fasting slots.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            {/* Today status badge */}
-            <div className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="text-[11px] uppercase font-bold tracking-wider text-emerald-200">
-                Today's Readings
+            <div className="px-4 py-2.5 rounded-lg bg-slate-900/80 border border-royal-800 text-center">
+              <div className="text-[11px] uppercase font-semibold tracking-wider text-royal-300">
+                Today's Slots
               </div>
-              <div className="text-lg font-bold mt-0.5">
-                {todayCount} <span className="text-xs font-normal text-emerald-200">/ 4 slots</span>
+              <div className="text-lg font-bold text-white mt-0.5">
+                {todayCount} <span className="text-xs font-normal text-royal-300">/ 4 logged</span>
               </div>
             </div>
 
-            {/* Log Reading Button */}
             <button
               onClick={handleOpenAdd}
-              className="px-4 py-2.5 rounded-xl bg-white text-emerald-800 hover:bg-emerald-50 text-sm font-semibold transition-colors flex items-center justify-center gap-2"
+              className="px-4 py-2.5 rounded-lg bg-royal-600 hover:bg-royal-500 text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm"
             >
               <Plus className="w-4 h-4" />
               <span>Log Reading</span>
@@ -133,31 +131,28 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Filter bar & table header */}
+        {/* Filter Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Your Glucose Readings</h2>
-            <p className="text-xs text-slate-500">
-              Viewing {pagination.total} total recorded readings
+            <h2 className="text-lg font-bold text-white">Readings Log</h2>
+            <p className="text-xs text-slate-400">
+              {pagination.total} total recorded readings
             </p>
           </div>
 
-          {/* Filter options */}
           <div className="flex items-center gap-2">
-            <div className="relative">
-              <input
-                type="date"
-                value={filterDate}
-                onChange={(e) => setFilterDate(e.target.value)}
-                className="px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              />
-            </div>
+            <input
+              type="date"
+              value={filterDate}
+              onChange={(e) => setFilterDate(e.target.value)}
+              className="px-3.5 py-1.5 rounded-lg border border-slate-800 bg-slate-900 text-xs font-medium text-slate-200 focus:outline-none focus:ring-1 focus:ring-royal-500"
+            />
             {filterDate && (
               <button
                 onClick={() => setFilterDate('')}
-                className="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold transition-colors"
+                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors border border-slate-700"
               >
-                Clear Filter
+                Clear
               </button>
             )}
           </div>

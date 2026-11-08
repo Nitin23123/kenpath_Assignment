@@ -5,28 +5,28 @@ function getGlucoseBadge(val) {
   if (val < 70) {
     return {
       label: 'Low',
-      bg: 'bg-sky-50 text-sky-700 border-sky-200',
-      dot: 'bg-sky-500'
+      bg: 'bg-sky-950 text-sky-300 border-sky-800/80',
+      dot: 'bg-sky-400'
     };
   }
   if (val <= 140) {
     return {
-      label: 'In Range',
-      bg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      dot: 'bg-emerald-500'
+      label: 'Normal',
+      bg: 'bg-royal-950 text-royal-200 border-royal-700/80',
+      dot: 'bg-royal-400'
     };
   }
   if (val <= 199) {
     return {
       label: 'Elevated',
-      bg: 'bg-amber-50 text-amber-700 border-amber-200',
-      dot: 'bg-amber-500'
+      bg: 'bg-amber-950 text-amber-300 border-amber-800/80',
+      dot: 'bg-amber-400'
     };
   }
   return {
     label: 'High',
-    bg: 'bg-rose-50 text-rose-700 border-rose-200',
-    dot: 'bg-rose-500'
+    bg: 'bg-rose-950 text-rose-300 border-rose-800/80',
+    dot: 'bg-rose-400'
   };
 }
 
@@ -63,27 +63,26 @@ export default function ReadingsTable({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-      {/* Table */}
+    <div className="bg-slate-900 rounded-xl border border-slate-800 shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-sm">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50/75 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              <th className="py-3.5 px-5">Date</th>
-              <th className="py-3.5 px-5">Time Slot</th>
-              <th className="py-3.5 px-5">Glucose Value</th>
-              <th className="py-3.5 px-5">Status</th>
-              <th className="py-3.5 px-5 text-right">Actions</th>
+            <tr className="border-b border-slate-800 bg-slate-950/60 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <th className="py-3 px-5">Date</th>
+              <th className="py-3 px-5">Time Slot</th>
+              <th className="py-3 px-5">Glucose Value</th>
+              <th className="py-3 px-5">Status</th>
+              <th className="py-3 px-5 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-800/60">
             {readings.length === 0 ? (
               <tr>
                 <td colSpan="5" className="py-12 text-center text-slate-400">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <Calendar className="w-8 h-8 text-slate-300" />
-                    <p className="font-medium text-slate-500">No readings found for this view</p>
-                    <p className="text-xs text-slate-400">Log a new reading above to get started</p>
+                  <div className="flex flex-col items-center justify-center gap-1.5">
+                    <Calendar className="w-6 h-6 text-slate-600" />
+                    <p className="font-medium text-slate-300">No readings found</p>
+                    <p className="text-xs text-slate-500">Log a new reading to start tracking</p>
                   </div>
                 </td>
               </tr>
@@ -93,43 +92,43 @@ export default function ReadingsTable({
                 return (
                   <tr
                     key={reading.id}
-                    className="hover:bg-slate-50/60 transition-colors group"
+                    className="hover:bg-slate-800/40 transition-colors"
                   >
-                    <td className="py-3.5 px-5 font-semibold text-slate-800">
+                    <td className="py-3 px-5 font-medium text-slate-200">
                       {formatDisplayDate(reading.reading_date)}
                     </td>
-                    <td className="py-3.5 px-5">
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700">
+                    <td className="py-3 px-5">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700/60">
                         {reading.slot}
                       </span>
                     </td>
-                    <td className="py-3.5 px-5">
+                    <td className="py-3 px-5">
                       <div className="flex items-baseline gap-1">
-                        <span className="text-base font-bold text-slate-900">{reading.value}</span>
-                        <span className="text-xs font-medium text-slate-400">mg/dl</span>
+                        <span className="text-base font-bold text-white">{reading.value}</span>
+                        <span className="text-xs text-slate-500">mg/dl</span>
                       </div>
                     </td>
-                    <td className="py-3.5 px-5">
+                    <td className="py-3 px-5">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${badge.bg}`}
+                        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-medium border ${badge.bg}`}
                       >
                         <span className={`w-1.5 h-1.5 rounded-full ${badge.dot}`}></span>
                         {badge.label}
                       </span>
                     </td>
-                    <td className="py-3.5 px-5 text-right">
-                      <div className="flex items-center justify-end gap-1.5 opacity-90 group-hover:opacity-100">
+                    <td className="py-3 px-5 text-right">
+                      <div className="flex items-center justify-end gap-1">
                         <button
                           onClick={() => onEdit(reading)}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"
-                          title="Edit reading"
+                          className="p-1.5 rounded text-slate-400 hover:text-royal-300 hover:bg-slate-800 transition-colors"
+                          title="Edit"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => setDeleteTarget(reading)}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                          title="Delete reading"
+                          className="p-1.5 rounded text-slate-400 hover:text-rose-400 hover:bg-slate-800 transition-colors"
+                          title="Delete"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -143,27 +142,26 @@ export default function ReadingsTable({
         </table>
       </div>
 
-      {/* Pagination Footer */}
       {pagination && pagination.totalPages > 1 && (
-        <div className="px-5 py-3.5 border-t border-slate-200 bg-slate-50/50 flex items-center justify-between text-xs text-slate-600">
+        <div className="px-5 py-3 border-t border-slate-800 bg-slate-950/40 flex items-center justify-between text-xs text-slate-400">
           <div>
-            Showing page <span className="font-bold text-slate-900">{pagination.page}</span> of{' '}
-            <span className="font-bold text-slate-900">{pagination.totalPages}</span> ({pagination.total} total readings)
+            Page <span className="font-semibold text-slate-200">{pagination.page}</span> of{' '}
+            <span className="font-semibold text-slate-200">{pagination.totalPages}</span> ({pagination.total} entries)
           </div>
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => onPageChange(pagination.page - 1)}
               disabled={pagination.page <= 1}
-              className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-colors"
+              className="p-1.5 rounded border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 disabled:opacity-30 disabled:pointer-events-none transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => onPageChange(pagination.page + 1)}
               disabled={pagination.page >= pagination.totalPages}
-              className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-colors"
+              className="p-1.5 rounded border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 disabled:opacity-30 disabled:pointer-events-none transition-colors"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
@@ -171,22 +169,21 @@ export default function ReadingsTable({
 
       {/* Delete Confirmation Modal */}
       {deleteTarget && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
-            <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-4">
-              <AlertTriangle className="w-6 h-6" />
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-slate-900 rounded-xl max-w-sm w-full p-6 border border-slate-800 shadow-2xl">
+            <div className="w-10 h-10 rounded-lg bg-rose-950 border border-rose-800 text-rose-400 flex items-center justify-center mx-auto mb-3">
+              <AlertTriangle className="w-5 h-5" />
             </div>
-            <h4 className="text-base font-bold text-slate-900 text-center">Delete Reading?</h4>
-            <p className="text-xs text-slate-500 text-center mt-1.5 mb-6">
-              Are you sure you want to delete the reading for{' '}
-              <strong className="text-slate-700">{deleteTarget.slot}</strong> on{' '}
-              <strong className="text-slate-700">{formatDisplayDate(deleteTarget.reading_date)}</strong>? This action cannot be undone.
+            <h4 className="text-base font-bold text-white text-center">Delete Reading?</h4>
+            <p className="text-xs text-slate-400 text-center mt-1.5 mb-6">
+              Delete the <strong className="text-slate-200">{deleteTarget.slot}</strong> reading on{' '}
+              <strong className="text-slate-200">{formatDisplayDate(deleteTarget.reading_date)}</strong>? This cannot be undone.
             </p>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => setDeleteTarget(null)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition-colors"
+                className="flex-1 py-2 rounded-lg border border-slate-700 text-slate-300 text-xs font-semibold hover:bg-slate-800 transition-colors"
               >
                 Cancel
               </button>
@@ -194,7 +191,7 @@ export default function ReadingsTable({
                 type="button"
                 onClick={confirmDelete}
                 disabled={deleting}
-                className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-md shadow-rose-500/20 disabled:opacity-50 transition-all"
+                className="flex-1 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold disabled:opacity-50 transition-colors"
               >
                 {deleting ? 'Deleting...' : 'Delete'}
               </button>

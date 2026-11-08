@@ -15,10 +15,10 @@ function CustomTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl text-xs space-y-1 border border-slate-700">
-        <p className="font-bold text-slate-200">{label}</p>
-        <p className="text-emerald-400 font-semibold">{data.slot}</p>
-        <p className="text-sm font-black text-white">
+      <div className="bg-slate-950 text-white p-2.5 rounded-lg border border-slate-700 shadow-xl text-xs space-y-0.5">
+        <p className="font-semibold text-slate-300">{label}</p>
+        <p className="text-royal-300 font-medium">{data.slot}</p>
+        <p className="text-sm font-bold text-white">
           {data.value} <span className="text-[10px] text-slate-400 font-normal">mg/dl</span>
         </p>
       </div>
@@ -30,17 +30,16 @@ function CustomTooltip({ active, payload, label }) {
 export default function TrendChart({ trends }) {
   if (!trends || trends.length === 0) {
     return (
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-        <h4 className="text-sm font-bold text-slate-800 mb-1">Blood Glucose Trend Curve</h4>
-        <p className="text-xs text-slate-500 mb-6">Visual tracking of your month-to-date glucose levels</p>
-        <div className="h-64 flex items-center justify-center text-xs text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-5 shadow-sm">
+        <h4 className="text-sm font-bold text-white mb-0.5">Glucose Trend Curve</h4>
+        <p className="text-xs text-slate-400 mb-4">Month-to-date readings tracking</p>
+        <div className="h-64 flex items-center justify-center text-xs text-slate-500 bg-slate-950/60 rounded-lg border border-dashed border-slate-800">
           No trend readings available for this period
         </div>
       </div>
     );
   }
 
-  // Format data for chart
   const chartData = trends.map((item, idx) => {
     const [y, m, d] = item.reading_date.split('-');
     return {
@@ -53,55 +52,54 @@ export default function TrendChart({ trends }) {
   });
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+    <div className="bg-slate-900 rounded-xl border border-slate-800 p-5 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
         <div>
-          <h4 className="text-base font-bold text-slate-900">Glucose Trend Curve</h4>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Month-to-date readings with clinical target boundary (70–140 mg/dl)
+          <h4 className="text-sm font-bold text-white">Month-to-Date Glucose Curve</h4>
+          <p className="text-xs text-slate-400 mt-0.5">
+            Target range: 70–140 mg/dl
           </p>
         </div>
         <div className="flex items-center gap-3 text-xs">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-sm bg-emerald-100 border border-emerald-300"></span>
-            <span className="text-slate-600 font-medium">Target Zone (70-140)</span>
+            <span className="w-2.5 h-2.5 rounded-xs bg-royal-950 border border-royal-700"></span>
+            <span className="text-slate-400">Target (70-140)</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-1 bg-emerald-600 rounded"></span>
-            <span className="text-slate-600 font-medium">Glucose Reading</span>
+            <span className="w-2.5 h-1 bg-royal-500 rounded"></span>
+            <span className="text-slate-400">Reading</span>
           </div>
         </div>
       </div>
 
-      <div className="h-72 w-full">
+      <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+          <LineChart data={chartData} margin={{ top: 10, right: 15, left: -15, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1e293b" />
             <XAxis
               dataKey="date"
               tickLine={false}
-              axisLine={{ stroke: '#e2e8f0' }}
+              axisLine={{ stroke: '#334155' }}
               tick={{ fontSize: 11, fill: '#64748b' }}
             />
             <YAxis
               domain={[40, 260]}
               tickLine={false}
-              axisLine={{ stroke: '#e2e8f0' }}
+              axisLine={{ stroke: '#334155' }}
               tick={{ fontSize: 11, fill: '#64748b' }}
               unit=" mg"
             />
-            {/* Target Normal Band */}
-            <ReferenceArea y1={70} y2={140} fill="#ecfdf5" fillOpacity={0.8} />
-            <ReferenceLine y={140} stroke="#10b981" strokeDasharray="3 3" strokeOpacity={0.6} />
-            <ReferenceLine y={70} stroke="#38bdf8" strokeDasharray="3 3" strokeOpacity={0.6} />
+            <ReferenceArea y1={70} y2={140} fill="#131944" fillOpacity={0.7} />
+            <ReferenceLine y={140} stroke="#4361ee" strokeDasharray="3 3" strokeOpacity={0.5} />
+            <ReferenceLine y={70} stroke="#38bdf8" strokeDasharray="3 3" strokeOpacity={0.5} />
             <Tooltip content={<CustomTooltip />} />
             <Line
               type="monotone"
               dataKey="value"
-              stroke="#059669"
-              strokeWidth={2.5}
-              dot={{ r: 4, fill: '#059669', strokeWidth: 2, stroke: '#ffffff' }}
-              activeDot={{ r: 6, fill: '#047857' }}
+              stroke="#4361ee"
+              strokeWidth={2}
+              dot={{ r: 3.5, fill: '#4361ee', strokeWidth: 1.5, stroke: '#0f172a' }}
+              activeDot={{ r: 5, fill: '#6f92fa' }}
             />
           </LineChart>
         </ResponsiveContainer>
